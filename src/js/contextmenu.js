@@ -13,6 +13,10 @@ class ContextMenu {
         });
 
         this.player.container.addEventListener('contextmenu', (e) => {
+            if (!this.player.options.contextmenuEnabled) {
+                return;
+            }
+
             if (this.shown) {
                 this.hide();
                 return;

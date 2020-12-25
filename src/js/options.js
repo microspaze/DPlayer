@@ -19,6 +19,7 @@ export default (options) => {
         apiBackend: defaultApiBackend,
         video: {},
         contextmenu: [],
+        contextmenuEnabled: true, 
         mutex: true,
         pluginOptions: { hls: {}, flv: {}, dash: {}, webtorrent: {} },
     };
