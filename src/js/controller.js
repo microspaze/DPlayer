@@ -102,22 +102,28 @@ class Controller {
 
     initPlayedBar() {
         const thumbMove = (e) => {
+            this.player.pause();
             let percentage = ((e.clientX || e.changedTouches[0].clientX) - utils.getBoundingClientRectViewLeft(this.player.template.playedBarWrap)) / this.player.template.playedBarWrap.clientWidth;
             percentage = Math.max(percentage, 0);
             percentage = Math.min(percentage, 1);
             this.player.bar.set('played', percentage, 'width');
             this.player.template.ptime.innerHTML = utils.secondToTime(percentage * this.player.video.duration);
+            this.player.touchMoved = true;
         };
 
         const thumbUp = (e) => {
             document.removeEventListener(utils.nameMap.dragEnd, thumbUp);
             document.removeEventListener(utils.nameMap.dragMove, thumbMove);
-            let percentage = ((e.clientX || e.changedTouches[0].clientX) - utils.getBoundingClientRectViewLeft(this.player.template.playedBarWrap)) / this.player.template.playedBarWrap.clientWidth;
-            percentage = Math.max(percentage, 0);
-            percentage = Math.min(percentage, 1);
-            this.player.bar.set('played', percentage, 'width');
-            this.player.seek(this.player.bar.get('played') * this.player.video.duration);
-            this.player.timer.enable('progress');
+            if (!utils.isMobile || this.player.touchMoved) {
+                this.player.touchMoved = false;
+                let percentage = ((e.clientX || e.changedTouches[0].clientX) - utils.getBoundingClientRectViewLeft(this.player.template.playedBarWrap)) / this.player.template.playedBarWrap.clientWidth;
+                percentage = Math.max(percentage, 0);
+                percentage = Math.min(percentage, 1);
+                this.player.bar.set('played', percentage, 'width');
+                this.player.seek(this.player.bar.get('played') * this.player.video.duration);
+                this.player.timer.enable('progress');
+                this.player.play();
+            }
         };
 
         this.player.template.playedBarWrap.addEventListener(utils.nameMap.dragStart, () => {
