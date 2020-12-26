@@ -99,7 +99,9 @@ class DPlayer {
                 height: this.arrow ? 24 : 30,
                 time: () => this.video.currentTime,
                 unlimited: this.user.get('unlimited'),
-                api: {
+                useApi: this.options.danmaku.useApi,
+                commentFunc: this.options.danmaku.commentFunc,
+                api: !this.options.danmaku.useApi ? {} : {
                     id: this.options.danmaku.id,
                     address: this.options.danmaku.api,
                     token: this.options.danmaku.token,

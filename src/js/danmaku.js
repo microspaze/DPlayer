@@ -15,9 +15,15 @@ class Danmaku {
         this._opacity = this.options.opacity;
         this.events = this.options.events;
         this.unlimited = this.options.unlimited;
+        this.useApi = this.options.useApi;
+        this.commentFunc = this.options.commentFunc;
         this._measure('');
 
-        this.load();
+        if (this.useApi) {
+            this.load();
+        } else {
+            this.options.callback();
+        }
     }
 
     load() {
@@ -82,6 +88,16 @@ class Danmaku {
     }
 
     send(dan, callback) {
+        if (!this.useApi) {
+            if (this.commentFunc) {
+                this.commentFunc(dan.text);
+            }
+            if (callback) {
+                callback();
+            }
+            return;
+        }
+
         const danmakuData = {
             token: this.options.api.token,
             id: this.options.api.id,

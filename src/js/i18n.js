@@ -29,7 +29,7 @@ const tranTxt = {
         'About author': '关于作者',
         'DPlayer feedback': '播放器意见反馈',
         'About DPlayer': '关于 DPlayer 播放器',
-        Loop: '洗脑循环',
+        Loop: '循环播放',
         Speed: '速度',
         'Opacity for danmaku': '弹幕透明度',
         Normal: '正常',
